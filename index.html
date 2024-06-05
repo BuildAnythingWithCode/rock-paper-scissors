@@ -8,11 +8,12 @@
 </head>
 
 <body>
-
-  <button id="rock-button">Rock</button>
-  <button id="paper-button">Paper</button>
-  <button id="scissors-button">Scissors</button>
-
+  <div class="button-container">
+    <button id="rock-button">Rock</button>
+    <button id="paper-button">Paper</button>
+    <button id="scissors-button">Scissors</button>
+  </div>
+  <div class="dom-methods"></div>
   <script>
 
     let tie = "It's a tie!";
@@ -79,6 +80,16 @@
       playerChoice = "Scissors";
       consolidate();
     });
+
+
+
+    const buttonContainer = document.querySelector(".button-container");
+    const body = document.querySelector("body");
+    const h1 = document.createElement("h1");
+    body.insertBefore(h1, buttonContainer);
+    h1.textContent = "Play the game by clicking a button below:";
+    h1.style.color = "blue";
+
 
   </script>
 </body>
