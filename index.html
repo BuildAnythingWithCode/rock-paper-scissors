@@ -22,95 +22,62 @@
     let rockButton = document.querySelector("#rock-button");
     let paperButton = document.querySelector("#paper-button");
     let scissorsButton = document.querySelector("#scissors-button");
+    let playerChoice = "";
 
     let playerScore = 0;
     let computerScore = 0;
 
-    rockButton.addEventListener("click", () => {
-      let playerChoiceRock = "Rock";
-      console.log(`You have chosen ${playerChoiceRock}.`);
-      function getComputerChoice() {
-        let computerChoiceNumber = Math.floor(Math.random() * 3);
-        if (computerChoiceNumber === 0) {
-          return "Rock";
-        } else if (computerChoiceNumber === 1) {
-          return "Paper";
-        } else {
-          return "Scissors";
-        }
+    function getComputerChoice() {
+      let computerChoiceNumber = Math.floor(Math.random() * 3);
+      if (computerChoiceNumber === 0) {
+        return "Rock";
+      } else if (computerChoiceNumber === 1) {
+        return "Paper";
+      } else {
+        return "Scissors";
       }
+    }
+
+    function playRound() {
       let computerChoice = getComputerChoice();
       let computerChoiceMessage = `Computer has chosen ${computerChoice}.`;
       console.log(computerChoiceMessage);
-      if (computerChoice === "Rock") {
+      if (playerChoice === computerChoice) {
         console.log(tie);
-      } else if (computerChoice === "Paper") {
-        playerScore++;
-        console.log(win);
-      } else {
+      } else if (
+        (playerChoice === "Rock" && computerChoice === "Paper") ||
+        (playerChoice === "Paper" && computerChoice === "Scissors") ||
+        (playerChoice === "Scissors" && computerChoice === "Rock")
+      ) {
         computerScore++;
         console.log(lose);
+      } else {
+        playerScore++;
+        console.log(win);
       }
       let currentScore = `You: ${playerScore}. Computer: ${computerScore}.`;
       console.log(currentScore);
+      console.log("---");
+    }
+
+    function consolidate() {
+      console.log(`You have chosen ${playerChoice}.`);
+      playRound();
+    }
+
+    rockButton.addEventListener("click", () => {
+      playerChoice = "Rock";
+      consolidate();
     });
 
     paperButton.addEventListener("click", () => {
-      let playerChoicePaper = "Paper";
-      console.log(`You have chosen ${playerChoicePaper}.`);
-      function getComputerChoice() {
-        let computerChoiceNumber = Math.floor(Math.random() * 3);
-        if (computerChoiceNumber === 0) {
-          return "Rock";
-        } else if (computerChoiceNumber === 1) {
-          return "Paper";
-        } else {
-          return "Scissors";
-        }
-      }
-      let computerChoice = getComputerChoice();
-      let computerChoiceMessage = `Computer has chosen ${computerChoice}.`;
-      console.log(computerChoiceMessage);
-      if (computerChoice === "Rock") {
-        playerScore++;
-        console.log(win);
-      } else if (computerChoice === "Paper") {
-        console.log(tie);
-      } else {
-        computerScore++;
-        console.log(lose);
-      }
-      let currentScore = `You: ${playerScore}. Computer: ${computerScore}.`;
-      console.log(currentScore);
+      playerChoice = "Paper";
+      consolidate();
     });
 
     scissorsButton.addEventListener("click", () => {
-      let playerChoiceScissors = "Scissors";
-      console.log(`You have chosen ${playerChoiceScissors}.`);
-      function getComputerChoice() {
-        let computerChoiceNumber = Math.floor(Math.random() * 3);
-        if (computerChoiceNumber === 0) {
-          return "Rock";
-        } else if (computerChoiceNumber === 1) {
-          return "Paper";
-        } else {
-          return "Scissors";
-        }
-      }
-      let computerChoice = getComputerChoice();
-      let computerChoiceMessage = `Computer has chosen ${computerChoice}.`;
-      console.log(computerChoiceMessage);
-      if (computerChoice === "Rock") {
-        computerScore++;
-        console.log(lose);
-      } else if (computerChoice === "Paper") {
-        playerScore++;
-        console.log(win);
-      } else {
-        console.log(tie);
-      }
-      let currentScore = `You: ${playerScore}. Computer: ${computerScore}.`;
-      console.log(currentScore);
+      playerChoice = "Scissors";
+      consolidate();
     });
 
   </script>
