@@ -8,12 +8,15 @@
 </head>
 
 <body>
+
   <div class="button-container">
-    <button id="rock-button">Rock</button>
-    <button id="paper-button">Paper</button>
-    <button id="scissors-button">Scissors</button>
+    <button id="rock-button" class="button">Rock</button>
+    <button id="paper-button" class="button">Paper</button>
+    <button id="scissors-button" class="button">Scissors</button>
   </div>
-  <div class="dom-methods"></div>
+
+  <div class="message-area"></div>
+
   <script>
 
     let tie = "It's a tie!";
@@ -23,10 +26,28 @@
     let rockButton = document.querySelector("#rock-button");
     let paperButton = document.querySelector("#paper-button");
     let scissorsButton = document.querySelector("#scissors-button");
-    let playerChoice = "";
 
     let playerScore = 0;
     let computerScore = 0;
+    let playerChoice = "";
+
+    const buttonContainer = document.querySelector(".button-container");
+    const body = document.querySelector("body");
+    const h1 = document.createElement("h1");
+    body.insertBefore(h1, buttonContainer);
+    h1.textContent = "Play the game by clicking a button below:";
+    h1.style.color = "blue";
+
+    const messageArea = document.querySelector(".message-area");
+    const playerChoiceMessage = document.createElement("div");
+    const computerChoiceMessage = document.createElement("div");
+    const judgementMessage = document.createElement("div");
+    const scoreMessage = document.createElement("div");
+
+    messageArea.appendChild(playerChoiceMessage);
+    messageArea.appendChild(computerChoiceMessage);
+    messageArea.appendChild(judgementMessage);
+    messageArea.appendChild(scoreMessage);
 
     function getComputerChoice() {
       let computerChoiceNumber = Math.floor(Math.random() * 3);
@@ -39,57 +60,60 @@
       }
     }
 
+    function check5() {
+      if (playerScore >= 5) {
+        judgementMessage.textContent = "Player has won, game over!";
+        buttonContainer.removeChild(rockButton);
+        buttonContainer.removeChild(paperButton);
+        buttonContainer.removeChild(scissorsButton);
+      } else if (computerScore >= 5) {
+        judgementMessage.textContent = "Computer has won, game over!";
+        buttonContainer.removeChild(rockButton);
+        buttonContainer.removeChild(paperButton);
+        buttonContainer.removeChild(scissorsButton);
+      }
+    }
+
     function playRound() {
       let computerChoice = getComputerChoice();
-      let computerChoiceMessage = `Computer has chosen ${computerChoice}.`;
-      console.log(computerChoiceMessage);
+      let computerChoiceMessageDOM = `Computer has chosen ${computerChoice}.`;
+      computerChoiceMessage.textContent = computerChoiceMessageDOM;
       if (playerChoice === computerChoice) {
-        console.log(tie);
+        judgementMessage.textContent = tie;
       } else if (
         (playerChoice === "Rock" && computerChoice === "Paper") ||
         (playerChoice === "Paper" && computerChoice === "Scissors") ||
         (playerChoice === "Scissors" && computerChoice === "Rock")
       ) {
         computerScore++;
-        console.log(lose);
+        judgementMessage.textContent = lose;
       } else {
         playerScore++;
-        console.log(win);
+        judgementMessage.textContent = win;
       }
-      let currentScore = `You: ${playerScore}. Computer: ${computerScore}.`;
-      console.log(currentScore);
-      console.log("---");
+      scoreMessage.textContent = `You: ${playerScore}. Computer: ${computerScore}.`;
+      check5();
     }
 
-    function consolidate() {
-      console.log(`You have chosen ${playerChoice}.`);
+    function playerChoiceFunction() {
+      playerChoiceMessage.textContent = `You have chosen ${playerChoice}.`;
       playRound();
     }
 
     rockButton.addEventListener("click", () => {
       playerChoice = "Rock";
-      consolidate();
+      playerChoiceFunction();
     });
 
     paperButton.addEventListener("click", () => {
       playerChoice = "Paper";
-      consolidate();
+      playerChoiceFunction();
     });
 
     scissorsButton.addEventListener("click", () => {
       playerChoice = "Scissors";
-      consolidate();
+      playerChoiceFunction();
     });
-
-
-
-    const buttonContainer = document.querySelector(".button-container");
-    const body = document.querySelector("body");
-    const h1 = document.createElement("h1");
-    body.insertBefore(h1, buttonContainer);
-    h1.textContent = "Play the game by clicking a button below:";
-    h1.style.color = "blue";
-
 
   </script>
 </body>
